@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 export function Button({ children, width, tabletWidth, mobileWidth, disabled, onClick }) {
   return (
@@ -45,5 +46,34 @@ const StyledButton = styled(motion.button)`
 
   @media screen and (max-width: 768px) {
     width: ${({ $mobileWidth }) => $mobileWidth};
+  }
+`;
+
+export function NavigationButton({ link, children }) {
+  return (
+    <StyledNavigationButtonContainer>
+      <StyledLink to={link}>
+        <Button width="28rem" tabletWidth="100%">
+          {children}
+        </Button>
+      </StyledLink>
+    </StyledNavigationButtonContainer>
+  );
+}
+
+const StyledNavigationButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  min-width: 360px;
+  margin-bottom: 6rem;
+`;
+
+const StyledLink = styled(Link)`
+  width: 28rem;
+  @media screen and (max-width: 768px) {
+    width: calc(100% - 64px);
+  }
+  @media screen and (max-width: 425px) {
+    width: calc(100% - 48px);
   }
 `;

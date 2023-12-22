@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getRollingPaperAll } from "../../api";
-import { Button } from "../../components/commons/Button";
-import { Link, useSearchParams } from "react-router-dom";
-import CardSection from "../../components/domains/list/CardSection";
+import { getRollingPaperAll } from "api";
+import { NavigationButton } from "components/commons/Button";
+import { useSearchParams } from "react-router-dom";
+import CardSection from "components/domains/list/CardSection";
 import SearchBar from "components/commons/SearchBar";
 import LoadingSpinner from "components/commons/LodingSpinner";
 import { LIST_TITLE } from "constants";
@@ -17,7 +17,7 @@ function SearchResult({ loading, searchDatas }) {
     return <CardSection title={LIST_TITLE[0]} recipients={searchDatas} $resultSection={true} />;
   }
 
-  return <StyledSearchResult>검색 결과가 없습니다</StyledSearchResult>;
+  return <EmptyResult>검색 결과가 없습니다</EmptyResult>;
 }
 
 function DefaultView({ loading, sortByMost, sortByRecent }) {
@@ -78,15 +78,7 @@ function ListPage() {
           <DefaultView loading={loading} sortByMost={sortByMost} sortByRecent={sortByRecent} />
         )}
       </Layout>
-      {!loading && (
-        <StyledButtonContainer>
-          <Link to="/post">
-            <Button width="28rem" tabletWidth="100%">
-              나도 만들어보기
-            </Button>
-          </Link>
-        </StyledButtonContainer>
-      )}
+      {!loading && <NavigationButton link={"/post"}>나도 만들어보기</NavigationButton>}
     </>
   );
 }
@@ -101,19 +93,7 @@ const Layout = styled.div`
   margin: 0 auto 4rem;
 `;
 
-const StyledButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  min-width: 360px;
-  margin-bottom: 6rem;
-
-  & a {
-    @media screen and (max-width: 1248px) {
-      width: calc(100% - 64px);
-    }
-  }
-`;
-const StyledSearchResult = styled.p`
+const EmptyResult = styled.p`
   margin-top: 5rem;
   font-size: 3rem;
   font-weight: 700;
