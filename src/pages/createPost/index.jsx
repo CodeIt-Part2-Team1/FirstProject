@@ -6,8 +6,8 @@ import ToggleButton from "components/domains/createPost/ToggleButton";
 import SelectColor from "components/domains/createPost/SelectBackground/SelectColor";
 import SelectImage from "components/domains/createPost/SelectBackground/SelectImage";
 import CreateButton from "components/commons/CreateButton";
+import { WARNING_MESSAGE, SUPABASE_URL } from "constants";
 import handleCreateButtonClick from "utils/handleCreateButtonClick";
-import { WARNING_MESSAGE } from "constants";
 
 const CreatePost = () => {
   const [isName, setIsName] = useState("");
@@ -37,6 +37,21 @@ const CreatePost = () => {
     }
   };
 
+  const onButtonClick = () => {
+    const backgroundUrl = selectedImage.includes("background")
+      ? `${SUPABASE_URL}/background_images/${selectedImage}`
+      : selectedImage
+      ? `${SUPABASE_URL}/new_background_images/${selectedImage}`
+      : null;
+
+    handleCreateButtonClick({
+      name: isName,
+      backgroundColor: selectedColor || "beige",
+      backgroundImageURL: backgroundUrl,
+      navigate,
+    });
+  };
+
   return (
     <Wrapper>
       <Container>
@@ -53,21 +68,7 @@ const CreatePost = () => {
         ) : (
           <SelectColor onColorSelect={handleColorSelect} />
         )}
-        <CreateButton
-          disabled={!isName}
-          onClick={() =>
-            handleCreateButtonClick({
-              name: isName,
-              backgroundColor: selectedColor || "beige",
-              backgroundImageURL: selectedImage.includes("background")
-                ? `https://gjbkkhzzbcjprpxlhdlu.supabase.co/storage/v1/object/public/background_images/${selectedImage}`
-                : selectedImage
-                ? `https://gjbkkhzzbcjprpxlhdlu.supabase.co/storage/v1/object/public/new_background_images/${selectedImage}`
-                : null,
-              navigate,
-            })
-          }
-        />
+        <CreateButton disabled={!isName} onClick={onButtonClick} />
       </Container>
     </Wrapper>
   );

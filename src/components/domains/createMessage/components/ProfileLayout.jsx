@@ -4,6 +4,7 @@ import { StyledTitle } from "../commonStyled";
 import { supabase } from "api/supabase/supabaseClient";
 import { defaultProfileImg } from "assets/ProfileImgUrls";
 import addButtonIcon from "assets/icon/add-button.png";
+import { SUPABASE_URL } from "constants";
 
 const ProfileLayout = ({ data, setData }) => {
   const [defaultProfileList, setDefaultProfileList] = useState();
@@ -14,7 +15,7 @@ const ProfileLayout = ({ data, setData }) => {
     data.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 
     const profileUrls = data.map((item) => {
-      return `https://gjbkkhzzbcjprpxlhdlu.supabase.co/storage/v1/object/public/profile_images/${item.name}`;
+      return `${SUPABASE_URL}/profile_images/${item.name}`;
     });
 
     setDefaultProfileList(profileUrls);
@@ -39,7 +40,7 @@ const ProfileLayout = ({ data, setData }) => {
     setData((prevData) => ({
       ...prevData,
       profileImageURL: imagePaths[0]
-        ? `https://gjbkkhzzbcjprpxlhdlu.supabase.co/storage/v1/object/public/upload_profile_image/${imagePaths[0]}`
+        ? `${SUPABASE_URL}/upload_profile_image/${imagePaths[0]}`
         : prevData.profileImageURL || defaultProfileImg,
     }));
   };

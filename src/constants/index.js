@@ -1,4 +1,5 @@
 export const BASE_URL = "https://rolling-api.vercel.app/2-1";
+export const SUPABASE_URL = "https://gjbkkhzzbcjprpxlhdlu.supabase.co/storage/v1/object/public";
 
 export const DEVICE_MAX_SIZE = {
   MOBILE: 425,

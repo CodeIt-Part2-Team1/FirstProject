@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { supabase } from "api/supabase/supabaseClient";
 import styled from "styled-components";
-import color from "../../../../styles/color.js";
 import { CheckIcon, Image } from "./styled";
 import addButtonIcon from "../../../../assets/icon/add-button.png";
 import selectedIcon from "../../../../assets/icon/background-selected.png";
+import color from "styles/color";
+import { SUPABASE_URL } from "constants";
 
 const AddImage = ({ onUpload, onPreviewSelect, isPreviewSelected }) => {
   const [previewImage, setPreviewImage] = useState(false);
@@ -36,11 +37,8 @@ const AddImage = ({ onUpload, onPreviewSelect, isPreviewSelected }) => {
         </Label>
       </AddButton>
       {previewImage && (
-        <PreviewImage type="button" onClick={() => onPreviewSelect(previewImage)} isSelected={isPreviewSelected}>
-          <Image
-            src={`https://gjbkkhzzbcjprpxlhdlu.supabase.co/storage/v1/object/public/new_background_images/${filePath}`}
-            alt="이미지 미리보기"
-          />
+        <PreviewImage type="button" onClick={() => onPreviewSelect(previewImage)} $isSelected={isPreviewSelected}>
+          <Image src={`${SUPABASE_URL}/new_background_images/${filePath}`} alt="이미지 미리보기" />
           {isPreviewSelected && <CheckIcon src={selectedIcon} alt="선택된 이미지" />}
         </PreviewImage>
       )}
@@ -55,7 +53,7 @@ const PreviewImage = styled.button`
   border-radius: 1.6rem;
   cursor: pointer;
   padding: 0;
-  opacity: ${(props) => props.isSelected && 0.5};
+  opacity: ${(props) => props.$isSelected && 0.5};
 
   @media screen and (max-width: 768px) {
     width: 15.4rem;

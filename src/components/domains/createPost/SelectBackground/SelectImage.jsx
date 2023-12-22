@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import { PaletteWrapper, CheckIcon, Image } from "./styled.js";
-import { supabase } from "../../../../api/supabase/supabaseClient.jsx";
 import AddImage from "./AddImageButton.jsx";
 import SkImageCard from "components/commons/SkImageCard.jsx";
-import selectedIcon from "../../../../assets/icon/background-selected.png";
+import selectedIcon from "assets/icon/background-selected.png";
+import { SUPABASE_URL } from "constants/index.js";
+import { supabase } from "api/supabase/supabaseClient.jsx";
+import { PaletteWrapper, CheckIcon, Image } from "./styled.js";
 
 const SelectImage = ({ onImageSelect }) => {
   const [imageList, setImageList] = useState([]);
@@ -71,7 +72,7 @@ const ImageList = ({ imageList, selectedImage, handleImageChange }) => {
         >
           <Image
             key={itemPath}
-            src={`https://gjbkkhzzbcjprpxlhdlu.supabase.co/storage/v1/object/public/background_images/${itemPath}`}
+            src={`${SUPABASE_URL}/background_images/${itemPath}`}
             alt={`Image ${itemPath}`}
             onClick={() => handleImageChange(itemPath)}
           />
